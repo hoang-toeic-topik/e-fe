@@ -1,0 +1,62 @@
+{
+  "app_title": "Giáo Viên AI Tiếng Anh",
+  "app_subtitle": "Học Tiếng Anh với Phản Hồi AI",
+  "nav": {
+    "home": "Trang Chủ",
+    "chat": "Chat",
+    "pronunciation": "Phát Âm",
+    "settings": "Cài Đặt"
+  },
+  "chat": {
+    "title": "Chat với Giáo Viên AI",
+    "input_placeholder": "Gõ hoặc ghi âm tin nhắn của bạn...",
+    "send": "Gửi",
+    "record": "Ghi Âm",
+    "stop": "Dừng",
+    "clear": "Xóa",
+    "loading": "Đang xử lý...",
+    "error": "Có lỗi xảy ra"
+  },
+  "audio": {
+    "record_start": "Bắt Đầu Ghi Âm",
+    "record_stop": "Dừng Ghi Âm",
+    "play": "Phát",
+    "pause": "Tạm Dừng",
+    "download": "Tải Xuống",
+    "upload": "Tải Lên Âm Thanh"
+  },
+  "feedback": {
+    "title": "Phản Hồi AI",
+    "grammar": "Ngữ Pháp",
+    "pronunciation": "Phát Âm",
+    "accent": "Giọng Điệu",
+    "score": "Điểm",
+    "suggestions": "Gợi Ý",
+    "corrections": "Sửa Chữa"
+  },
+  "voice": {
+    "title": "Chọn Giọng",
+    "american": "Mỹ (Nam)",
+    "british": "Anh (Nữ)",
+    "australian": "Úc (Nam)"
+  },
+  "language": {
+    "title": "Ngôn Ngữ",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "korean": "한국어"
+  },
+  "session": {
+    "new": "Phiên Mới",
+    "history": "Lịch Sử Chat",
+    "clear": "Xóa Lịch Sử",
+    "session_id": "ID Phiên"
+  },
+  "messages": {
+    "welcome": "Chào mừng đến với Giáo Viên AI Tiếng Anh! Hãy bắt đầu bằng cách ghi âm hoặc gõ tin nhắn.",
+    "processing": "Đang xử lý đầu vào của bạn...",
+    "success": "Hoàn tất!",
+    "error": "Có điều gì đó không ổn. Vui lòng thử lại."
+  }
+}
+

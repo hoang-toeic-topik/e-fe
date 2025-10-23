@@ -1,0 +1,62 @@
+{
+  "app_title": "English AI Teacher",
+  "app_subtitle": "Learn English with AI Feedback",
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "pronunciation": "Pronunciation",
+    "settings": "Settings"
+  },
+  "chat": {
+    "title": "Chat with AI Teacher",
+    "input_placeholder": "Type or record your message...",
+    "send": "Send",
+    "record": "Record",
+    "stop": "Stop",
+    "clear": "Clear",
+    "loading": "Processing...",
+    "error": "Error occurred"
+  },
+  "audio": {
+    "record_start": "Start Recording",
+    "record_stop": "Stop Recording",
+    "play": "Play",
+    "pause": "Pause",
+    "download": "Download",
+    "upload": "Upload Audio"
+  },
+  "feedback": {
+    "title": "AI Feedback",
+    "grammar": "Grammar",
+    "pronunciation": "Pronunciation",
+    "accent": "Accent",
+    "score": "Score",
+    "suggestions": "Suggestions",
+    "corrections": "Corrections"
+  },
+  "voice": {
+    "title": "Select Voice",
+    "american": "American (Male)",
+    "british": "British (Female)",
+    "australian": "Australian (Male)"
+  },
+  "language": {
+    "title": "Language",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "korean": "한국어"
+  },
+  "session": {
+    "new": "New Session",
+    "history": "Chat History",
+    "clear": "Clear History",
+    "session_id": "Session ID"
+  },
+  "messages": {
+    "welcome": "Welcome to English AI Teacher! Start by recording or typing a message.",
+    "processing": "Processing your input...",
+    "success": "Done!",
+    "error": "Something went wrong. Please try again."
+  }
+}
+

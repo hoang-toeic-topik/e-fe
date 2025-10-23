@@ -1,0 +1,62 @@
+{
+  "app_title": "영어 AI 선생님",
+  "app_subtitle": "AI 피드백으로 영어 배우기",
+  "nav": {
+    "home": "홈",
+    "chat": "채팅",
+    "pronunciation": "발음",
+    "settings": "설정"
+  },
+  "chat": {
+    "title": "AI 선생님과 채팅",
+    "input_placeholder": "메시지를 입력하거나 녹음하세요...",
+    "send": "보내기",
+    "record": "녹음",
+    "stop": "중지",
+    "clear": "지우기",
+    "loading": "처리 중...",
+    "error": "오류가 발생했습니다"
+  },
+  "audio": {
+    "record_start": "녹음 시작",
+    "record_stop": "녹음 중지",
+    "play": "재생",
+    "pause": "일시 중지",
+    "download": "다운로드",
+    "upload": "오디오 업로드"
+  },
+  "feedback": {
+    "title": "AI 피드백",
+    "grammar": "문법",
+    "pronunciation": "발음",
+    "accent": "억양",
+    "score": "점수",
+    "suggestions": "제안",
+    "corrections": "수정"
+  },
+  "voice": {
+    "title": "음성 선택",
+    "american": "미국 (남성)",
+    "british": "영국 (여성)",
+    "australian": "호주 (남성)"
+  },
+  "language": {
+    "title": "언어",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "korean": "한국어"
+  },
+  "session": {
+    "new": "새 세션",
+    "history": "채팅 기록",
+    "clear": "기록 지우기",
+    "session_id": "세션 ID"
+  },
+  "messages": {
+    "welcome": "영어 AI 선생님에 오신 것을 환영합니다! 녹음하거나 메시지를 입력하여 시작하세요.",
+    "processing": "입력을 처리 중입니다...",
+    "success": "완료!",
+    "error": "문제가 발생했습니다. 다시 시도하세요."
+  }
+}
+
