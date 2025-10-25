@@ -132,12 +132,7 @@ export const PronunciationPractice: React.FC<PronunciationPracticeProps> = ({
           )}
         </div>
 
-        {isRecording && (
-          <div className="flex items-center justify-center gap-2 text-red-500">
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-            <span>{t('audio.recording') || 'Recording...'}</span>
-          </div>
-        )}
+
 
         {audioBlob && (
           <div className="flex gap-2">

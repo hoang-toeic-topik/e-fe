@@ -7,6 +7,10 @@
     "pronunciation": "Pronunciation",
     "settings": "Settings"
   },
+  "tab": {
+    "conversation": "Conversation",
+    "pronunciation": "Pronunciation"
+  },
   "chat": {
     "title": "Chat with AI Teacher",
     "input_placeholder": "Type or record your message...",
@@ -45,6 +49,22 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어"
+  },
+  "level": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "settings": {
+    "title": "Settings",
+    "speed": "Speed",
+    "level": "Learning Level"
+  },
+  "topic": {
+    "select": "Select Topic"
+  },
+  "common": {
+    "close": "Close"
   },
   "session": {
     "new": "New Session",

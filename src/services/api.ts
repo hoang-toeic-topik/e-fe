@@ -21,7 +21,7 @@ class TeacherAPI {
     sessionId: string,
     speakByAI: number = 1,
     language: string = 'en'
-  ): Promise<Blob> {
+  ): Promise<{ audioBlob: Blob; feedback: any }> {
     const formData = new FormData();
     formData.append('file', audioBlob, 'audio.wav');
     formData.append('session_id', sessionId);
@@ -35,7 +35,20 @@ class TeacherAPI {
       responseType: 'blob',
     });
 
-    return response.data;
+    // Extract feedback from response headers
+    const feedback = {
+      userText: response.headers['x-user-text'] || '',
+      correctedText: response.headers['x-corrected-text'] || '',
+      aiResponse: response.headers['x-feedback'] || '',
+      pronunciationScore: parseFloat(response.headers['x-pronunciation-score'] || '0'),
+      accent: response.headers['x-accent'] || '',
+      grammarScore: parseFloat(response.headers['x-grammar-score'] || '0'),
+    };
+
+    return {
+      audioBlob: response.data,
+      feedback,
+    };
   }
 
   async chatWithText(

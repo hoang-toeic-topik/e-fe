@@ -7,6 +7,10 @@
     "pronunciation": "Phát Âm",
     "settings": "Cài Đặt"
   },
+  "tab": {
+    "conversation": "Hội Thoại",
+    "pronunciation": "Phát Âm"
+  },
   "chat": {
     "title": "Chat với Giáo Viên AI",
     "input_placeholder": "Gõ hoặc ghi âm tin nhắn của bạn...",
@@ -45,6 +49,22 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "korean": "한국어"
+  },
+  "level": {
+    "beginner": "Người Mới Bắt Đầu",
+    "intermediate": "Trung Cấp",
+    "advanced": "Nâng Cao"
+  },
+  "settings": {
+    "title": "Cài Đặt",
+    "speed": "Tốc Độ",
+    "level": "Mức Học"
+  },
+  "topic": {
+    "select": "Chọn Chủ Đề"
+  },
+  "common": {
+    "close": "Đóng"
   },
   "session": {
     "new": "Phiên Mới",

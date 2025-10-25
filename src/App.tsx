@@ -1,37 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 import { useChatStore, Message } from './store/useChatStore';
+import { useOnboardingStore } from './store/useOnboardingStore';
 import { teacherAPI } from './services/api';
-import { AudioRecorder } from './components/AudioRecorder';
-import { ChatBox } from './components/ChatBox';
-import { VoiceSelector } from './components/VoiceSelector';
-import { LanguageSwitcher } from './components/LanguageSwitcher';
-import { TopicSelector } from './components/TopicSelector';
-import { ConversationTab } from './components/ConversationTab';
-import { PronunciationPractice } from './components/PronunciationPractice';
-import { TestingPanel } from './components/TestingPanel';
+import { ChatLayout } from './components/ChatLayout';
+import { OnboardingFlow } from './components/OnboardingFlow';
 import './i18n';
 
 function App() {
-  const { t } = useTranslation();
   const {
     sessionId,
     messages,
     isLoading,
-    error,
     language,
     voiceId,
+    hasGreeting,
     addMessage,
+    updateMessage,
     setLoading,
     setError,
-    setVoiceId,
+    setHasGreeting,
   } = useChatStore();
 
-  const [activeTab, setActiveTab] = useState<'conversation' | 'pronunciation'>('conversation');
-  const [showTopicSelector, setShowTopicSelector] = useState(false);
-  const [currentTopic, setCurrentTopic] = useState<string | null>(null);
-  const [pronunciationFeedback, setPronunciationFeedback] = useState<any>(null);
-  const [showTestingPanel, setShowTestingPanel] = useState(false);
+  const { isOnboardingComplete } = useOnboardingStore();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    // Mark as hydrated after first render to ensure store is ready
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     // Check backend health on mount
@@ -41,61 +37,65 @@ function App() {
     });
   }, [setError]);
 
-  const handleSelectTopic = async (topic: string) => {
-    setCurrentTopic(topic);
-    setShowTopicSelector(false);
-    setActiveTab('conversation');
-    // Topic will be sent with next audio message
-  };
+  // Add initial greeting message only on first load
+  useEffect(() => {
+    if (isHydrated && isOnboardingComplete && !hasGreeting) {
+      const greetingMessage: Message = {
+        id: `msg_greeting_${Date.now()}`,
+        type: 'ai',
+        text: "Hello! 👋 I'm your English AI Teacher. I'm here to help you practice speaking English in a natural and engaging way. Let's start a conversation! What would you like to talk about today?",
+        timestamp: new Date(),
+      };
+      addMessage(greetingMessage);
+      setHasGreeting(true);
+    }
+  }, [isHydrated, isOnboardingComplete, hasGreeting, addMessage, setHasGreeting]);
+
+
 
   const handleAudioRecorded = async (audioBlob: Blob) => {
     try {
       setLoading(true);
       setError(null);
 
-      // Add user message
+      // Add user message with audio blob
       const userMessage: Message = {
         id: `msg_${Date.now()}`,
         type: 'user',
-        text: 'Recording...',
+        text: 'Processing audio...',
         timestamp: new Date(),
+        audioBlob: audioBlob,
       };
       addMessage(userMessage);
 
       // Send audio to backend
-      const responseBlob = await teacherAPI.chatWithAudio(
+      const response = await teacherAPI.chatWithAudio(
         audioBlob,
         sessionId,
         voiceId,
         language
       );
 
-      // Extract feedback from response headers
-      const feedback = {
-        text: 'AI Feedback received',
-        pronunciation: { score: 0.8 },
-        accent: { accent: 'american' },
-      };
+      // Update user message with transcribed text
+      updateMessage(userMessage.id, {
+        text: response.feedback.userText || 'Your message',
+      });
 
-      // Add AI response message
+      // Create AI response message with audio
       const aiMessage: Message = {
         id: `msg_${Date.now()}_ai`,
         type: 'ai',
-        text: feedback.text,
+        text: response.feedback.aiResponse,
         timestamp: new Date(),
-        feedback,
+        audioBlob: response.audioBlob,
+        correctedText: response.feedback.correctedText,
+        feedback: {
+          pronunciation: { score: response.feedback.pronunciationScore },
+          accent: { accent: response.feedback.accent },
+          grammar: { score: response.feedback.grammarScore },
+        },
       };
       addMessage(aiMessage);
-
-      // Store pronunciation feedback for practice tab
-      if (activeTab === 'pronunciation') {
-        setPronunciationFeedback(feedback);
-      }
-
-      // Play AI response audio
-      const audioUrl = URL.createObjectURL(responseBlob);
-      const audio = new Audio(audioUrl);
-      audio.play();
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Unknown error';
       setError(errorMsg);
@@ -105,130 +105,29 @@ function App() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-8 relative">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            {t('app_title')}
-          </h1>
-          <p className="text-gray-600">{t('app_subtitle')}</p>
-          <p className="text-sm text-gray-500 mt-2">
-            {t('session.session_id')}: {sessionId}
-          </p>
-          {/* Testing Button */}
-          <button
-            onClick={() => setShowTestingPanel(true)}
-            className="absolute top-0 right-0 px-3 py-1 text-xs bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition"
-          >
-            🧪 Test
-          </button>
-        </div>
+  // Show onboarding if not complete (after hydration)
+  if (isHydrated && !isOnboardingComplete) {
+    return <OnboardingFlow onComplete={() => {}} />;
+  }
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Area */}
-          <div className="lg:col-span-2 space-y-4">
-            {/* Tab Navigation */}
-            <div className="flex gap-2 bg-white p-2 rounded-lg shadow-md">
-              <button
-                onClick={() => setActiveTab('conversation')}
-                className={`flex-1 px-4 py-2 rounded-lg font-semibold transition-colors ${
-                  activeTab === 'conversation'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                💬 {t('tab.conversation') || 'Conversation'}
-              </button>
-              <button
-                onClick={() => setActiveTab('pronunciation')}
-                className={`flex-1 px-4 py-2 rounded-lg font-semibold transition-colors ${
-                  activeTab === 'pronunciation'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                🎤 {t('tab.pronunciation') || 'Pronunciation'}
-              </button>
-            </div>
-
-            {/* Tab Content */}
-            {activeTab === 'conversation' ? (
-              <ConversationTab
-                messages={messages}
-                isLoading={isLoading}
-                topic={currentTopic || undefined}
-                onAudioRecorded={handleAudioRecorded}
-              />
-            ) : (
-              <PronunciationPractice
-                onAudioRecorded={handleAudioRecorded}
-                isLoading={isLoading}
-                feedback={pronunciationFeedback}
-              />
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-4">
-            {/* Topic Selector Button */}
-            <button
-              onClick={() => setShowTopicSelector(true)}
-              className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:shadow-lg transition font-semibold"
-            >
-              🎯 {currentTopic ? `Topic: ${currentTopic}` : 'Select Topic'}
-            </button>
-
-            {/* Voice Selector */}
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <VoiceSelector
-                selectedVoice={voiceId}
-                onVoiceChange={setVoiceId}
-              />
-            </div>
-
-            {/* Language Switcher */}
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <LanguageSwitcher />
-            </div>
-
-            {/* Error Display */}
-            {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-                <p className="font-semibold">{t('messages.error')}</p>
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-
-            {/* Session Stats */}
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <h3 className="font-semibold text-gray-800 mb-2">
-                {t('feedback.title')}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {messages.length === 0
-                  ? t('messages.welcome')
-                  : `${messages.length} messages in this session`}
-              </p>
-            </div>
-          </div>
+  // Show loading while hydrating
+  if (!isHydrated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
+    );
+  }
 
-      {/* Topic Selector Modal */}
-      <TopicSelector
-        isOpen={showTopicSelector}
-        onClose={() => setShowTopicSelector(false)}
-        onSelectTopic={handleSelectTopic}
+  return (
+    <div className="flex flex-col h-screen bg-white">
+      <ChatLayout
+        messages={messages}
         isLoading={isLoading}
-      />
-
-      {/* Testing Panel */}
-      <TestingPanel
-        isOpen={showTestingPanel}
-        onClose={() => setShowTestingPanel(false)}
+        onAudioRecorded={handleAudioRecorded}
       />
     </div>
   );
