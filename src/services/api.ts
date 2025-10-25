@@ -32,21 +32,34 @@ class TeacherAPI {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      responseType: 'blob',
     });
 
-    // Extract feedback from response headers
+    // Extract data from JSON response
+    const data = response.data;
+
+    // Decode base64 audio to blob
+    const audioBase64 = data.audio_base64;
+    const binaryString = atob(audioBase64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    const audioBlob_response = new Blob([bytes], { type: 'audio/wav' });
+
     const feedback = {
-      userText: response.headers['x-user-text'] || '',
-      correctedText: response.headers['x-corrected-text'] || '',
-      aiResponse: response.headers['x-feedback'] || '',
-      pronunciationScore: parseFloat(response.headers['x-pronunciation-score'] || '0'),
-      accent: response.headers['x-accent'] || '',
-      grammarScore: parseFloat(response.headers['x-grammar-score'] || '0'),
+      userText: data.user_text || '',
+      correctedText: data.corrected_text || '',
+      aiResponse: data.ai_response || '',
+      pronunciationScore: data.feedback?.pronunciation_score || 0,
+      accent: data.feedback?.accent || '',
+      grammarScore: data.feedback?.grammar_score || 0,
+      pronunciationSuggestions: data.feedback?.pronunciation_suggestions || [],
+      accentSuggestions: data.feedback?.accent_suggestions || [],
+      grammarErrors: data.feedback?.grammar_errors || [],
     };
 
     return {
-      audioBlob: response.data,
+      audioBlob: audioBlob_response,
       feedback,
     };
   }

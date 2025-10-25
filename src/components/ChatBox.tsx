@@ -64,22 +64,22 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ messages, isLoading }) => {
 
   return (
     <div className="flex flex-col h-full bg-white overflow-hidden">
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <div className="text-5xl mb-4">🤖</div>
-              <p className="text-gray-500 text-lg">{t('messages.welcome') || 'Start a conversation'}</p>
+            <div className="text-center px-4">
+              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">🤖</div>
+              <p className="text-gray-500 text-base sm:text-lg">{t('messages.welcome') || 'Start a conversation'}</p>
             </div>
           </div>
         ) : (
           messages.map((msg) => (
             <div
               key={msg.id}
-              className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
+              className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} mb-3 sm:mb-4`}
             >
               <div
-                className={`max-w-md px-4 py-3 rounded-lg ${
+                className={`max-w-xs sm:max-w-sm md:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-xs sm:text-sm ${
                   msg.type === 'user'
                     ? 'bg-blue-600 text-white rounded-br-none'
                     : 'bg-gray-100 text-gray-900 rounded-bl-none'
@@ -160,9 +160,6 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ messages, isLoading }) => {
                       <p>
                         🎤 {t('feedback.pronunciation')}: {msg.feedback.pronunciation.score?.toFixed(2)}
                       </p>
-                    )}
-                    {msg.feedback.accent && (
-                      <p>🌍 {t('feedback.accent')}: {msg.feedback.accent.accent}</p>
                     )}
                   </div>
                 )}
