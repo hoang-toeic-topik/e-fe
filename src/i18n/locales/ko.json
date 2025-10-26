@@ -23,7 +23,8 @@
     "play": "재생",
     "pause": "일시 중지",
     "download": "다운로드",
-    "upload": "오디오 업로드"
+    "upload": "오디오 업로드",
+    "clear": "지우기"
   },
   "feedback": {
     "title": "AI 피드백",

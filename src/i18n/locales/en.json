@@ -27,7 +27,8 @@
     "play": "Play",
     "pause": "Pause",
     "download": "Download",
-    "upload": "Upload Audio"
+    "upload": "Upload Audio",
+    "clear": "Clear"
   },
   "feedback": {
     "title": "AI Feedback",

@@ -27,7 +27,8 @@
     "play": "Phát",
     "pause": "Tạm Dừng",
     "download": "Tải Xuống",
-    "upload": "Tải Lên Âm Thanh"
+    "upload": "Tải Lên Âm Thanh",
+    "clear": "Xóa"
   },
   "feedback": {
     "title": "Phản Hồi AI",

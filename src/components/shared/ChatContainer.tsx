@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../../store/useChatStore';
+import { PronunciationMessage } from '../../store/usePronunciationStore';
 import { MessageDisplay } from './MessageDisplay';
 
+// Accept both Message and PronunciationMessage types
+type MessageType = Message | PronunciationMessage;
+
 interface ChatContainerProps {
-  messages: Message[];
+  messages: MessageType[];
   isLoading: boolean;
   children?: React.ReactNode; // For input area
 }
@@ -13,9 +17,11 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   isLoading,
   children,
 }) => {
+  console.log('[ChatContainer] Rendering with messages:', messages);
   const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastMessageIdRef = useRef<string | null>(null);
+  const chatAreaRef = useRef<HTMLDivElement | null>(null);
 
   const handlePlayAudio = (message: Message) => {
     if (audioRef.current) {
@@ -57,10 +63,22 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     }
   }, [messages]);
 
+  // Auto-scroll to latest message
+  useEffect(() => {
+    if (chatAreaRef.current) {
+      // Scroll to bottom with smooth behavior
+      setTimeout(() => {
+        if (chatAreaRef.current) {
+          chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+        }
+      }, 0);
+    }
+  }, [messages]);
+
   return (
     <div className="w-full max-w-2xl h-full flex flex-col bg-white rounded-lg shadow-lg overflow-hidden">
       {/* Chat Area */}
-      <div className="flex-1 overflow-hidden">
+      <div ref={chatAreaRef} className="flex-1 overflow-y-auto">
         <MessageDisplay
           messages={messages}
           isLoading={isLoading}

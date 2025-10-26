@@ -1,11 +1,15 @@
 import React from 'react';
 import { Message } from '../store/useChatStore';
+import { PronunciationMessage } from '../store/usePronunciationStore';
 import { MainLayout } from './layout/MainLayout';
 import { ChatContainer } from './shared/ChatContainer';
 import { AudioRecorder } from './AudioRecorder';
 
+// Accept both Message and PronunciationMessage types
+type MessageType = Message | PronunciationMessage;
+
 interface ChatLayoutProps {
-  messages: Message[];
+  messages: MessageType[];
   isLoading: boolean;
   onAudioRecorded: (audioBlob: Blob) => void;
   title?: string;

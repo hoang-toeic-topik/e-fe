@@ -46,6 +46,7 @@ class TeacherAPI {
     }
     const audioBlob_response = new Blob([bytes], { type: 'audio/wav' });
 
+    // Simplified feedback structure
     const feedback = {
       userText: data.user_text || '',
       correctedText: data.corrected_text || '',
@@ -53,8 +54,6 @@ class TeacherAPI {
       pronunciationScore: data.feedback?.pronunciation_score || 0,
       accent: data.feedback?.accent || '',
       grammarScore: data.feedback?.grammar_score || 0,
-      pronunciationSuggestions: data.feedback?.pronunciation_suggestions || [],
-      accentSuggestions: data.feedback?.accent_suggestions || [],
       grammarErrors: data.feedback?.grammar_errors || [],
     };
 

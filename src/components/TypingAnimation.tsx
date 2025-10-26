@@ -7,25 +7,28 @@ interface TypingAnimationProps {
 }
 
 export const TypingAnimation: React.FC<TypingAnimationProps> = ({
-  text,
+  text = '',
   speed = 30,
   onComplete,
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
 
+  // Ensure text is a string
+  const safeText = text || '';
+
   useEffect(() => {
-    if (displayedText.length < text.length) {
+    if (displayedText.length < safeText.length) {
       const timer = setTimeout(() => {
-        setDisplayedText(text.slice(0, displayedText.length + 1));
+        setDisplayedText(safeText.slice(0, displayedText.length + 1));
       }, speed);
 
       return () => clearTimeout(timer);
-    } else if (displayedText.length === text.length && !isComplete) {
+    } else if (displayedText.length === safeText.length && !isComplete) {
       setIsComplete(true);
       onComplete?.();
     }
-  }, [displayedText, text, speed, isComplete, onComplete]);
+  }, [displayedText, safeText, speed, isComplete, onComplete]);
 
   return (
     <span>

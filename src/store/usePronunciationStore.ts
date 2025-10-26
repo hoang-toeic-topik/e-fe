@@ -52,9 +52,17 @@ export interface PronunciationMessage {
   audioUrl?: string;
   isNewMessage?: boolean; // Track if message is newly received from API
   feedback?: {
+    userText?: string;
+    correctedText?: string;
+    aiResponse?: string;
+    pronunciationScore?: number;
+    accent?: string;
+    grammarScore?: number;
+    pronunciationSuggestions?: string[];
+    accentSuggestions?: string[];
+    grammarErrors?: string[];
     grammar?: any;
     pronunciation?: any;
-    accent?: any;
   };
 }
 
