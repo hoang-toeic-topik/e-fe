@@ -4,7 +4,7 @@ import { MainLayout } from './layout/MainLayout';
 import { ChatContainer } from './shared/ChatContainer';
 import { AudioRecorder } from './AudioRecorder';
 
-interface ChatLayoutProps {
+interface PronunciationLayoutProps {
   messages: Message[];
   isLoading: boolean;
   onAudioRecorded: (audioBlob: Blob) => void;
@@ -13,16 +13,16 @@ interface ChatLayoutProps {
 }
 
 /**
- * ChatLayout - Reusable chat interface component
- * Used for both AI Talk and Pronunciation Practice modes
+ * PronunciationLayout - Reusable pronunciation practice interface component
+ * Similar to ChatLayout but specifically for pronunciation practice mode
  * Wraps MainLayout + ChatContainer for consistent styling
  */
-export const ChatLayout: React.FC<ChatLayoutProps> = ({
+export const PronunciationLayout: React.FC<PronunciationLayoutProps> = ({
   messages,
   isLoading,
   onAudioRecorded,
-  title = 'Chat',
-  subtitle = 'Have a conversation',
+  title = 'Pronunciation Practice',
+  subtitle = 'Improve your pronunciation with detailed feedback',
 }) => {
   return (
     <MainLayout title={title} subtitle={subtitle}>

@@ -77,6 +77,11 @@
     "processing": "Đang xử lý đầu vào của bạn...",
     "success": "Hoàn tất!",
     "error": "Có điều gì đó không ổn. Vui lòng thử lại."
+  },
+  "pronunciation": {
+    "practice_phrase": "Luyện tập cụm từ này:",
+    "next_phrase": "Cụm Từ Tiếp Theo",
+    "feedback": "Phản Hồi"
   }
 }
 

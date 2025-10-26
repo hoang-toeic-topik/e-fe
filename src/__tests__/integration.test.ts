@@ -1,6 +1,8 @@
 /**
  * Integration tests for the conversation flow
+ * @vitest
  */
+/// <reference types="vitest" />
 
 import { teacherAPI } from '../services/api';
 

@@ -17,6 +17,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   const [speed, setSpeed] = useState(1);
   const [level, setLevel] = useState('intermediate');
 
+  // Ensure English is the default language on first load
+  React.useEffect(() => {
+    if (!i18n.language || i18n.language === 'cimode') {
+      i18n.changeLanguage('en');
+    }
+  }, [i18n]);
+
   const voices = [
     { id: 1, name: t('voice.american') || 'American' },
     { id: 2, name: t('voice.british') || 'British' },

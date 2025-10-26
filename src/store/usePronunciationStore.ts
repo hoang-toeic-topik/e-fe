@@ -42,7 +42,7 @@ const createStorageWithTTL = (): PersistStorage<any> => {
   };
 };
 
-export interface Message {
+export interface PronunciationMessage {
   id: string;
   type: 'user' | 'ai';
   text: string;
@@ -50,7 +50,7 @@ export interface Message {
   timestamp: Date;
   audioBlob?: Blob;
   audioUrl?: string;
-  isNewMessage?: boolean; // Track if message is newly received from API (for typing animation)
+  isNewMessage?: boolean; // Track if message is newly received from API
   feedback?: {
     grammar?: any;
     pronunciation?: any;
@@ -58,9 +58,9 @@ export interface Message {
   };
 }
 
-export interface ChatState {
+export interface PronunciationState {
   sessionId: string;
-  messages: Message[];
+  messages: PronunciationMessage[];
   isLoading: boolean;
   error: string | null;
   language: string;
@@ -70,8 +70,8 @@ export interface ChatState {
 
   // Actions
   setSessionId: (id: string) => void;
-  addMessage: (message: Message) => void;
-  updateMessage: (id: string, updates: Partial<Message>) => void;
+  addMessage: (message: PronunciationMessage) => void;
+  updateMessage: (id: string, updates: Partial<PronunciationMessage>) => void;
   clearMessages: () => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -81,7 +81,7 @@ export interface ChatState {
   setHasGreeting: (has: boolean) => void;
 }
 
-export const useChatStore = create<ChatState>()(
+export const usePronunciationStore = create<PronunciationState>()(
   persist(
     (set) => ({
       sessionId: `session_${Date.now()}`,
@@ -94,11 +94,11 @@ export const useChatStore = create<ChatState>()(
       hasGreeting: false,
 
       setSessionId: (id: string) => set({ sessionId: id }),
-      addMessage: (message: Message) =>
+      addMessage: (message: PronunciationMessage) =>
         set((state) => ({
           messages: [...state.messages, message],
         })),
-      updateMessage: (id: string, updates: Partial<Message>) =>
+      updateMessage: (id: string, updates: Partial<PronunciationMessage>) =>
         set((state) => ({
           messages: state.messages.map((msg) =>
             msg.id === id ? { ...msg, ...updates } : msg
@@ -116,7 +116,7 @@ export const useChatStore = create<ChatState>()(
       setHasGreeting: (has: boolean) => set({ hasGreeting: has }),
     }),
     {
-      name: 'chat-store',
+      name: 'pronunciation-store',
       storage: createStorageWithTTL(),
       partialize: (state) => ({
         sessionId: state.sessionId,

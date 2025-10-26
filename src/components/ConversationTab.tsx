@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FiSettings } from 'react-icons/fi';
 import { Message } from '../store/useChatStore';
 import { ChatBox } from './ChatBox';
@@ -17,7 +16,6 @@ export const ConversationTab: React.FC<ConversationTabProps> = ({
   isLoading,
   onAudioRecorded,
 }) => {
-  const { t } = useTranslation();
   const [showSettings, setShowSettings] = useState(false);
 
   return (

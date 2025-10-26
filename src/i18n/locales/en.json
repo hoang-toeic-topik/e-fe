@@ -73,10 +73,15 @@
     "session_id": "Session ID"
   },
   "messages": {
-    "welcome": "Welcome to English AI Teacher! Start by recording or typing a message.",
+    "welcome": "Welcome to English AI Pronunciation Practice! Start by recording or typing a message.",
     "processing": "Processing your input...",
     "success": "Done!",
     "error": "Something went wrong. Please try again."
+  },
+  "pronunciation": {
+    "practice_phrase": "Practice this phrase:",
+    "next_phrase": "Next Phrase",
+    "feedback": "Feedback"
   }
 }
 

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:8000';
 
 class TeacherAPI {
   private api: AxiosInstance;
@@ -61,6 +61,51 @@ class TeacherAPI {
     return {
       audioBlob: audioBlob_response,
       feedback,
+    };
+  }
+
+  async talkWithAI(
+    audioBlob: Blob,
+    sessionId: string,
+    speakByAI: number = 1,
+    language: string = 'en',
+    topic?: string
+  ): Promise<{ audioBlob: Blob; response: any }> {
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'audio.wav');
+    formData.append('session_id', sessionId);
+    formData.append('speak_by_ai', speakByAI.toString());
+    formData.append('language', language);
+    if (topic) {
+      formData.append('topic', topic);
+    }
+
+    const response = await this.api.post('/chat/talk-with-ai', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    // Extract data from JSON response
+    const data = response.data;
+
+    // Decode base64 audio to blob
+    const audioBase64 = data.audio_base64;
+    const binaryString = atob(audioBase64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    const audioBlob_response = new Blob([bytes], { type: 'audio/wav' });
+
+    return {
+      audioBlob: audioBlob_response,
+      response: {
+        userText: data.user_text || '',
+        aiResponse: data.ai_response || '',
+        topic: data.topic || '',
+        language: data.language || 'en',
+      },
     };
   }
 

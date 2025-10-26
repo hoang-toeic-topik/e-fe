@@ -57,6 +57,11 @@
     "processing": "입력을 처리 중입니다...",
     "success": "완료!",
     "error": "문제가 발생했습니다. 다시 시도하세요."
+  },
+  "pronunciation": {
+    "practice_phrase": "이 구문을 연습하세요:",
+    "next_phrase": "다음 구문",
+    "feedback": "피드백"
   }
 }
 

@@ -168,14 +168,14 @@ class IntegrationTester {
       const response = await teacherAPI.chatWithAudio(audioBlob, sessionId, 1, 'en');
       const duration = Date.now() - this.startTime;
 
-      if (response && response.size > 0) {
+      if (response && response.audioBlob && response.audioBlob.size > 0) {
         this.results.push({
           name: testName,
           status: 'PASS',
           duration,
-          details: { audioSize: response.size },
+          details: { audioSize: response.audioBlob.size },
         });
-        console.log(`✅ ${testName} - ${duration}ms - Audio size: ${response.size}`);
+        console.log(`✅ ${testName} - ${duration}ms - Audio size: ${response.audioBlob.size}`);
       } else {
         throw new Error('No audio response');
       }

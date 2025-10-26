@@ -17,7 +17,7 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
   const [recordingTime, setRecordingTime] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const recordingTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const recordingTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const MAX_RECORDING_TIME = 45; // 45 seconds
 
   const startRecording = async () => {
