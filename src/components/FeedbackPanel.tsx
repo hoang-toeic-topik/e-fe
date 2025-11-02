@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 interface FeedbackData {
   userText?: string;
@@ -15,29 +13,12 @@ interface FeedbackData {
 interface FeedbackPanelProps {
   feedback: FeedbackData;
   isExpanded: boolean;
-  onToggle: () => void;
 }
 
 export const FeedbackPanel: React.FC<FeedbackPanelProps> = ({
   feedback,
   isExpanded,
-  onToggle,
 }) => {
-  const { t } = useTranslation();
-  const [expandedSections, setExpandedSections] = useState<{
-    [key: string]: boolean;
-  }>({
-    pronunciation: true,
-    grammar: true,
-    suggestions: true,
-  });
-
-  const toggleSection = (section: string) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
 
   const ScoreBar = ({ score, max = 100 }: { score: number; max?: number }) => {
     const percentage = (score / max) * 100;
@@ -54,32 +35,7 @@ export const FeedbackPanel: React.FC<FeedbackPanelProps> = ({
     );
   };
 
-  const Section = ({
-    title,
-    sectionKey,
-    children,
-  }: {
-    title: string;
-    sectionKey: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="border-b border-gray-200 last:border-b-0">
-      <button
-        onClick={() => toggleSection(sectionKey)}
-        className="w-full flex items-center justify-between p-2 hover:bg-gray-50 transition"
-      >
-        <h4 className="font-semibold text-xs text-gray-800">{title}</h4>
-        {expandedSections[sectionKey] ? (
-          <FiChevronUp size={14} />
-        ) : (
-          <FiChevronDown size={14} />
-        )}
-      </button>
-      {expandedSections[sectionKey] && (
-        <div className="px-2 pb-2 bg-gray-50 space-y-1 text-xs">{children}</div>
-      )}
-    </div>
-  );
+
 
   if (!isExpanded) {
     return null;

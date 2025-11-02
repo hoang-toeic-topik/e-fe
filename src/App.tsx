@@ -41,7 +41,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/chat-with-ai" element={<ChatWithAI />} />
         <Route path="/pronunciation" element={<PronunciationPracticePage />} />

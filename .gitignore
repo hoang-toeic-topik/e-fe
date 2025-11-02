@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 
 # Environment
+.env
+.env.local
+.env.*.local
 
 # Build
 build/

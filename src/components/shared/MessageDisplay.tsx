@@ -176,7 +176,6 @@ export const MessageDisplay: React.FC<MessageDisplayProps> = ({
                   <FeedbackPanel
                     feedback={msg.feedback}
                     isExpanded={expandedFeedbackId === msg.id}
-                    onToggle={() => setExpandedFeedbackId(expandedFeedbackId === msg.id ? null : msg.id)}
                   />
                 </div>
               </div>
