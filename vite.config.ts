@@ -10,8 +10,8 @@ export default defineConfig(({ command }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Use '/e-fe/' for production (GitHub Pages), '/' for development
-  base: command === "build" ? "/e-fe/" : "/",
+  // Use '/english-ai/' for production (GitHub Pages), '/' for development
+  base: command === "build" ? "/english-ai/" : "/",
   server: {
     port: 5173,
     strictPort: false,
