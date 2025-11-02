@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "English AI Teacher - Learn English with AI feedback",
   "type": "module",
-  "homepage": "https://hoang-toeic-topik.github.io/english-ai",
+  "homepage": "https://hoang-toeic-topik.github.io/e-fe",
 
   "scripts": {
     "dev": "vite",
