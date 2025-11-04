@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { FiMic, FiSquare, FiPlay, FiDownload } from 'react-icons/fi';
+import { FiMic, FiSquare, FiPlay, FiTrash2 } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 
 interface AudioRecorderProps {
@@ -87,20 +87,15 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
 
   const playAudio = () => {
     if (audioBlob) {
-      const url = URL.createObjectURL(audioBlob);
-      const audio = new Audio(url);
+        const url = URL.createObjectURL(audioBlob);
+        const audio = new Audio(url);
       audio.play();
     }
   };
 
-  const downloadAudio = () => {
-    if (audioBlob) {
-      const url = URL.createObjectURL(audioBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `recording_${Date.now()}.wav`;
-      a.click();
-    }
+  const clearRecording = () => {
+    setAudioBlob(null);
+    setRecordingTime(0);
   };
 
   return (
@@ -152,10 +147,10 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
             {isLoading ? '⏳ Processing...' : '✓ Send'}
           </button>
           <button
-            onClick={downloadAudio}
+            onClick={clearRecording}
             className="flex items-center justify-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition text-xs sm:text-sm"
           >
-            <FiDownload size={14} className="sm:w-4 sm:h-4" /> {t('audio.download') || 'Download'}
+            <FiTrash2 size={14} className="sm:w-4 sm:h-4" /> {t('audio.clear') || 'Clear'}
           </button>
         </div>
       )}
