@@ -11,7 +11,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   // Use '/e-fe/' for production (GitHub Pages), '/' for development
-  base: command === "build" ? "/e-fe/" : "/",
+  base: "/",
   server: {
     port: 5173,
     strictPort: false,
